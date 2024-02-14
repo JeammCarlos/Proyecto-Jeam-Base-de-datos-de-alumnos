@@ -1,0 +1,85 @@
+/* Estilos para el cuerpo de la página */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Estilos para el contenedor principal */
+#app {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  max-width: 600px; /* Limita el ancho del contenedor para que no se vea muy amplio */
+  margin: auto; /* Centra el contenedor en la pantalla */
+}
+
+/* Estilos para los títulos */
+h1 {
+  color: #333333;
+  text-align: center;
+  margin-bottom: 20px; /* Espacio inferior entre el título y los elementos */
+}
+
+/* Estilos para los inputs */
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc; /* Añade un borde para resaltar los inputs */
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Estilos para los botones */
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-top: 10px; /* Espacio superior entre los elementos */
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Estilos para la tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* Estilos para los elementos de la lista */
+li {
+  margin-bottom: 5px;
+  list-style-type: none;
+}
+
+/* Estilos para la etiqueta de promedio */
+.promedio {
+  font-weight: bold;
+  color: #FF5722;
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Alumnos</title>
+    <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Gestión de Alumnos</h1>
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre">
+        </div>
+        <div>
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" id="apellidos">
+        </div>
+        <div>
+            <label for="edad">Edad:</label>
+            <input type="number" id="edad">
+        </div>
+        <button onclick="inscribirAlumno()">Agregar Alumno</button>
+        <hr>
+        <h2>Lista de Alumnos</h2>
+        <ul id="lista-alumnos"></ul>
+
+        <!-- Campos de búsqueda por nombre y apellido -->
+        <div>
+            <label for="input-nombre">Buscar por nombre:</label>
+            <input type="text" id="input-nombre">
+            <button onclick="buscarPorNombre()">Buscar</button>
+        </div>
+        <div>
+            <label for="input-apellido">Buscar por apellido:</label>
+            <input type="text" id="input-apellido">
+            <button onclick="buscarPorApellido()">Buscar</button>
+        </div>
+
+        <!-- Menú desplegable para seleccionar alumno -->
+        <div>
+            <label for="select-alumno">Seleccionar alumno:</label>
+            <select id="select-alumno"></select>
+        </div>
+
+        <!-- Campo de entrada para ingresar las calificaciones -->
+        <div>
+            <label for="calificaciones">Calificaciones:</label>
+            <input type="text" id="calificaciones">
+        </div>
+
+        <!-- Botón para asignar calificaciones -->
+        <button onclick="asignarCalificaciones()">Asignar Calificaciones</button>
+
+        <!-- Menú desplegable para seleccionar grupo -->
+        <div>
+            <label for="select-grupo">Seleccionar grupo:</label>
+            <select id="select-grupo"></select>
+            <button onclick="obtenerPromedioGrupo()">Obtener Promedio</button>
+        </div>
+
+        <!-- Botones para ordenar la lista de alumnos -->
+        <div>
+            <button onclick="ordenarAlumnos('calificacion_ascendente')">Ordenar por Calificación Ascendente</button>
+            <button onclick="ordenarAlumnos('calificacion_descendente')">Ordenar por Calificación Descendente</button>
+            <button onclick="ordenarAlumnos('edad_ascendente')">Ordenar por Edad Ascendente</button>
+            <button onclick="ordenarAlumnos('edad_descendente')">Ordenar por Edad Descendente</button>
+        </div>
+    </div>
+    
+    <script src="main.js"></script>
+</body>
+</html>
