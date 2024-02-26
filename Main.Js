@@ -3,27 +3,27 @@ class Alumno {
       this.nombre = nombre;
       this.apellidos = apellidos;
       this.edad = edad;
-      this.materias = [];
-      this.calificaciones = {};
+      this.materias = []; // Pila para representar las materias
+      this.calificaciones = new Map();
   }
 
   inscribirMateria(materia) {
-      this.materias.push(materia);
+      this.materias.push(materia); // Agregar materia a la pila
   }
 
   asignarCalificacion(materia, calificacion) {
-      this.calificaciones[materia] = calificacion;
+      this.calificaciones.set(materia, calificacion);
   }
 }
 
 class Grupo {
   constructor(nombre) {
       this.nombre = nombre;
-      this.alumnos = [];
+      this.alumnos = []; // Cola para representar los grupos
   }
 
   agregarAlumno(alumno) {
-      this.alumnos.push(alumno);
+      this.alumnos.push(alumno); // Agregar alumno a la cola
   }
 }
 
@@ -111,58 +111,70 @@ function asignarAlumnoAGrupo() {
   grupo.agregarAlumno(alumno);
 }
 
-function obtenerPromedioAlumno(nombreAlumno) {
-  const alumno = listaAlumnos.find(alumno => alumno.nombre.toLowerCase() === nombreAlumno.toLowerCase());
-  if (!alumno) {
-      return 'Alumno no encontrado';
+function obtenerPromedioGrupo() {
+  const nombreGrupo = document.getElementById('select-grupo').value;
+
+  if (!nombreGrupo) {
+    alert('Por favor, seleccione un grupo.');
+    return;
   }
-  const calificaciones = Object.values(alumno.calificaciones);
-  const sumaCalificaciones = calificaciones.reduce((total, calificacion) => total + calificacion, 0);
-  return sumaCalificaciones / calificaciones.length;
+
+  const promedio = calcularPromedioGrupo(nombreGrupo);
+  alert(`El promedio del grupo ${nombreGrupo} es: ${promedio}`);
 }
 
-function obtenerPromedioGrupo(nombreGrupo) {
-  const grupo = grupos.find(grupo => grupo.nombre.toLowerCase() === nombreGrupo.toLowerCase());
+function calcularPromedioGrupo(nombreGrupo) {
+  const grupo = grupos.find(grupo => grupo.nombre === nombreGrupo);
   if (!grupo) {
-      return 'Grupo no encontrado';
+    alert('Grupo no encontrado.');
+    return 0;
   }
+
   let sumaTotal = 0;
-  let cantidadTotal = 0;
   grupo.alumnos.forEach(alumno => {
-      const calificaciones = Object.values(alumno.calificaciones);
-      const sumaCalificaciones = calificaciones.reduce((total, calificacion) => total + calificacion, 0);
-      sumaTotal += sumaCalificaciones;
-      cantidadTotal += calificaciones.length;
+    const calificaciones = Object.values(alumno.calificaciones);
+    const sumaCalificaciones = calificaciones.reduce((total, calificacion) => total + calificacion, 0);
+    sumaTotal += sumaCalificaciones;
   });
+  const cantidadTotal = grupo.alumnos.length;
   return sumaTotal / cantidadTotal;
 }
 
-function obtenerAlumnosOrdenAscendente() {
-  const alumnosOrdenados = listaAlumnos.slice().sort((a, b) => {
-      const promedioA = obtenerPromedioAlumno(a.nombre);
-      const promedioB = obtenerPromedioAlumno(b.nombre);
-      return promedioA - promedioB;
+function ordenarAlumnos(criteria) {
+  let alumnosOrdenados;
+
+  switch (criteria) {
+    case 'calificacion_ascendente':
+      alumnosOrdenados = obtenerAlumnosOrdenAscendente();
+      break;
+    case 'calificacion_descendente':
+      alumnosOrdenados = obtenerAlumnosOrdenDescendente();
+      break;
+    case 'edad_ascendente':
+      alumnosOrdenados = obtenerAlumnosOrdenadosPorEdad();
+      break;
+    case 'edad_descendente':
+      alumnosOrdenados = obtenerAlumnosOrdenadosPorEdad().reverse();
+      break;
+    default:
+      alert('Criterio de orden no válido.');
+      return;
+  }
+
+  // Actualizar la lista de alumnos en la interfaz
+  const listaAlumnosElemento = document.getElementById('lista-alumnos');
+  listaAlumnosElemento.innerHTML = '';
+  alumnosOrdenados.forEach(alumno => {
+    const li = document.createElement('li');
+    li.textContent = `Nombre: ${alumno.nombre} ${alumno.apellidos}, Edad: ${alumno.edad}`;
+    listaAlumnosElemento.appendChild(li);
   });
-  return alumnosOrdenados;
 }
 
-function obtenerAlumnosOrdenDescendente() {
-  const alumnosOrdenados = listaAlumnos.slice().sort((a, b) => {
-      const promedioA = obtenerPromedioAlumno(a.nombre);
-      const promedioB = obtenerPromedioAlumno(b.nombre);
-      return promedioB - promedioA;
-  });
-  return alumnosOrdenados;
-}
-
-function obtenerAlumnosOrdenadosPorEdad() {
-  const alumnosOrdenados = listaAlumnos.slice().sort((a, b) => a.edad - b.edad);
-  return alumnosOrdenados;
-}
 
 function guardarDatos() {
-  localStorage.setItem('listaAlumnos', JSON.stringify(listaAlumnos));
-  localStorage.setItem('grupos', JSON.stringify(grupos));
+  localStorage.setItem('listaAlumnos', JSON.stringify(Array.from(listaAlumnos)));
+  localStorage.setItem('grupos', JSON.stringify(Array.from(grupos)));
 }
 
 function cargarDatos() {
